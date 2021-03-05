@@ -10,18 +10,16 @@ void deleteVal(vector<int>& nums, int index, int len) {
 
 int removeElement(vector<int>& nums, int val) {
     int len = nums.size();
-    int count = 0;
     for(int i=0; i<len; i++) {
         if(nums[i] == val) {
             deleteVal(nums, i, len);
-            ++count;
             --len;
             --i;
         }
     }
     
     // Printing Details
-    cout << "Output: " << count << endl;
+    cout << "Output: " << len << endl;
     cout << "Array: ";
     for(int i=0; i<len; i++) {
         cout << nums[i] << " ";
