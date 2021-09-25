@@ -89,19 +89,19 @@ int main() {
     cin >> n;
     vector<string> commands;
     Twitch t1;
-    for(int i=0; i<n; i++) {
+    for(int i=0; i<=n; i++) {
         string temp;
         getline(cin, temp);
         commands.push_back(temp);
     }
-    int i=0;
+    int i=1;
     map<string, int> commnadVals;
-
-    while(i<n) {
+    assignCommands(commnadVals);
+    while(i<=n) {
         switch(commnadVals[commands[i]]) {
             case 0:
                 t1.StreamerOnline(commands[i+1], stoi(commands[i+2]), commands[i+3]);
-                i+=3;
+                i+=4;
                 break;
             case 1:
                 t1.UpdateViews(commands[i+1], stoi(commands[i+2]), commands[i+3]);
@@ -125,6 +125,7 @@ int main() {
                 break;
             case 6:
                 cout << t1.TopStreamer() << endl;
+                i++;
                 break;
         }
     }
