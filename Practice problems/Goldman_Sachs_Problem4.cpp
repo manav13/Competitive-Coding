@@ -1,3 +1,4 @@
+// Goldman Sachs - Competitive Gaming
 #include<bits/stdc++.h>
 using namespace std;
 
