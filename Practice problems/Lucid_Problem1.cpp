@@ -66,7 +66,7 @@ long compute(vector<int> numbers) {
                 result += 1;
             }
             else {
-                result += ((answer.size()-index-1)*2);
+                result += ((answer.size()-index)*2);
                 result += 1;
             }
             answer.insert(answer.begin()+index, numbers[i]);
