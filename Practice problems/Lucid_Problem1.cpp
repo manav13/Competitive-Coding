@@ -28,6 +28,13 @@ int getIndex(vector<int> answer, int key) {
     }
 }
 
+int getUpdatedIndex(vector<int> answer, int key, int left) {
+    while(true) {
+        if(answer[left] != key) return left-1;
+        left++;
+    }
+}
+
 long compute(vector<int> numbers) {
     int size = numbers.size();
     
@@ -49,7 +56,11 @@ long compute(vector<int> numbers) {
         }
         else {
             int index = getIndex(answer, numbers[i]);
-            // cout << "index: " << index << endl;
+            cout << "index: " << index << endl;
+            if(answer[index] == numbers[i] || answer[index+1] == numbers[i] || answer[index-1] == numbers[i]) {
+                int rightIndex = getUpdatedIndex(answer, numbers[i], index);
+                if(index > answer.size() - rightIndex-1) index = rightIndex;
+            }
             if(index <= ( answer.size()-index)) {
                 result += (index*2);
                 result += 1;
