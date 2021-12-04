@@ -2,10 +2,9 @@
 using namespace std;
 
 void insertZero(vector<int>& arr, int index, int size) {
-    for(int i=size-2; i>=index; i--) {
+    for(int i=size-2; i>=index-1; i--) {
         arr[i+1] = arr[i];
     }
-    if (index!=size) arr[index] = 0;
 }
 
 void duplicateZeros(vector<int>& arr) {
