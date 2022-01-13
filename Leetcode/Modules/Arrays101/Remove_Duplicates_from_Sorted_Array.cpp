@@ -7,23 +7,39 @@ void leftShift(vector<int> &arr, int size, int index1, int index2) {
     }
 }
 
+// int removeDuplicates(vector<int>& nums) {
+//     int size = nums.size();
+//     if(size == 0) return 0;
+//     int curNum = nums[0], startIndex = 0;
+    
+//     for(int i=1; i<size; i++) {
+//         if(nums[i]!=curNum) {
+//             curNum = nums[i];
+//             int numOfDup = i-1-startIndex;
+//             size -= numOfDup;
+//             leftShift(nums, size, startIndex+1, i);
+//             startIndex++;
+//             i = startIndex;
+//         }
+//     }
+//     if(nums[size-1] == nums[startIndex]) size -= size - startIndex - 1;
+//     return size;
+// }
+
+// Space = O(1) & Time = O(N)
 int removeDuplicates(vector<int>& nums) {
     int size = nums.size();
-    if(size == 0) return 0;
-    int curNum = nums[0], startIndex = 0;
+    if(size == 0 or size == 1) return size;
     
-    for(int i=1; i<size; i++) {
-        if(nums[i]!=curNum) {
-            curNum = nums[i];
-            int numOfDup = i-1-startIndex;
-            size -= numOfDup;
-            leftShift(nums, size, startIndex+1, i);
-            startIndex++;
-            i = startIndex;
+    int i=0;
+    
+    for(int j=1; j<size; j++) {
+        if(nums[i] != nums[j]) {
+            nums[++i] = nums[j];
         }
     }
-    if(nums[size-1] == nums[startIndex]) size -= size - startIndex - 1;
-    return size;
+    nums[++i] = nums[size-1];
+    return i;
 }
 
 int main() {
