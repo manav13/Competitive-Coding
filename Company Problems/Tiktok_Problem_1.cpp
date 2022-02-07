@@ -1,4 +1,4 @@
-// K Smallest Substring
+// K Smallest Substring - TC passed = 7/15
 
 #include<bits/stdc++.h>
 using namespace std;
