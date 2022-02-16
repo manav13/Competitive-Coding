@@ -1,7 +1,25 @@
-// Not solved yet (TC passed = 6/7)
-
 #include<bits/stdc++.h>
 using namespace std;
+
+string buildLine(vector<string> wordsCanFit, int spaceLength, string align) {
+    string line = "*";
+    int size = wordsCanFit.size();
+
+    // Add right spaces
+    if(align == "RIGHT") for(int i=0; i<spaceLength; i++) line += " ";
+
+    // Add words
+    for(int i=0; i<size; i++) {
+        line += wordsCanFit[i];
+        if(i!=size-1) line += " ";
+    }
+
+    // Add left spaces
+    if(align == "LEFT") for(int i=0; i<spaceLength; i++) line += " ";
+    
+    line += "*";
+    return line;
+}
 
 vector<string> solution(vector<vector<string>> paragraphs, vector<string> aligns, int width) {
     vector<string> output;
@@ -11,7 +29,6 @@ vector<string> solution(vector<vector<string>> paragraphs, vector<string> aligns
         firstRow += "*";
     }
     output.push_back(firstRow);
-    
     int size = aligns.size();
     
     for(int i=0; i<size; i++) {
@@ -25,92 +42,48 @@ vector<string> solution(vector<vector<string>> paragraphs, vector<string> aligns
         for(int j=0; j<noOfWords; j++) {
             string word = para[j];
             int wordSize = word.size();
-            if(wordSize <= curWidth) {
+            if((wordsCanFit.empty() && wordSize <= curWidth) || (wordSize < curWidth)){
+                if(wordsCanFit.empty()) curWidth -= wordSize;
+                else curWidth -= (1+wordSize);
                 wordsCanFit.push_back(word);
-                if(j==0) curWidth -= wordSize;
-                else curWidth -= (wordSize+1);
             }
             else {
-                string line = "*";
-                if(side == "LEFT") {
-                    int s = wordsCanFit.size();
-                    for(int k=0; k<s; k++) {
-                        line += wordsCanFit[k];
-                        if(k!=s-1) line += " ";
-                    }
-                    
-                    for(int k=0; k<curWidth; k++) {
-                        line += " ";
-                    }
-                    
-                    line += "*";
-                    output.push_back(line);
-                    
-                    // Cleaning
-                    while(!wordsCanFit.empty()) {
-                        wordsCanFit.pop_back();
-                    }
-                    wordsCanFit.push_back(word);
-                    curWidth = width - wordSize;
-                }
-                else {
-                    for(int k=0; k<curWidth; k++) {
-                        line += " ";
-                    }
-                    
-                    int s = wordsCanFit.size();
-                    for(int k=0; k<s; k++) {
-                        line += wordsCanFit[k];
-                        if(k!=s-1) line += " ";
-                    }
-                    
-                    line += "*";
-                    output.push_back(line);
-                    
-                    // Cleaning
-                    while(!wordsCanFit.empty()) {
-                        wordsCanFit.pop_back();
-                    }
-                    wordsCanFit.push_back(word);
-                    curWidth = width - wordSize;
-                }
+                output.push_back(buildLine(wordsCanFit, curWidth, side));
+                wordsCanFit.clear();
+                wordsCanFit.push_back(word);
+                curWidth = width - wordSize;
             }
-        }  
-        string line = "*";
-        if(side == "LEFT") {
-            int s = wordsCanFit.size();
-            for(int k=0; k<s; k++) {
-                line += wordsCanFit[k];
-                if(k!=s-1) line += " ";
-            }
-            
-            for(int k=0; k<curWidth; k++) {
-                line += " ";
-            }
-            
-            line += "*";
-            output.push_back(line);
         }
-        else {
-            for(int k=0; k<curWidth; k++) {
-                line += " ";
-            }
-            
-            int s = wordsCanFit.size();
-            for(int k=0; k<s; k++) {
-                line += wordsCanFit[k];
-                if(k!=s-1) line += " ";
-            }
-            
-            line += "*";
-            output.push_back(line);
-        } 
+        output.push_back(buildLine(wordsCanFit, curWidth, side));
     }
-    
     output.push_back(firstRow);
     return output;
 }
 
 int main() {
+    vector<vector<string>> paragraphs;
+    
+    // paragraphs.push_back({"there are"});
+    // paragraphs.push_back({"four seasons", "in a year"});
+    // paragraphs.push_back({"summer", "autumn", "winter", "spring"});
+    paragraphs.push_back({"hello", "world"});
+    paragraphs.push_back({"How", "areYou", "doing"});
+    paragraphs.push_back({"Please look", "and align", "to right"});
+
+    vector<string> aligns;
+    // aligns.push_back("RIGHT");
+    // aligns.push_back("LEFT");
+    // aligns.push_back("RIGHT");
+    aligns.push_back("LEFT");
+    aligns.push_back("RIGHT");
+    aligns.push_back("RIGHT");
+
+    int width = 16;
+
+    vector<string> result = solution(paragraphs, aligns, width);
+
+    for(auto str : result) {
+        cout << str << endl;
+    }
     return 0;
 }
