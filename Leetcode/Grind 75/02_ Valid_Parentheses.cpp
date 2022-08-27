@@ -4,23 +4,20 @@ using namespace std;
 class Solution {
 public:
     bool isValid(string s) {
-        stack<char> st;
+        stack<int> st;
         
-        for(auto p : s) {
-            // if opening bracket then push the character else check top element and pop
-            if(p == '(' || p == '{' || p == '[') {
-                st.push(p);
-            }
-            else if(p == ')') {
-                if(!st.empty() && st.top() == '(') st.pop();
-                else return false;
-            }
-            else if(p == '}') {
-                if(!st.empty() && st.top() == '{') st.pop();
-                else return false;
-            }
-            else if(p == ']') {
-                if(!st.empty() && st.top() == '[') st.pop();
+        unordered_map<char, char> hash;
+        hash[')'] = '(';
+        hash['}'] = '{';
+        hash[']'] = '[';
+        
+        for(auto c : s) {
+            if(c == '(' || c == '{' || c == '[')
+                st.push(c);
+            else {
+                if(!st.empty() && hash[c] == st.top()) {
+                    st.pop();
+                }
                 else return false;
             }
         }
