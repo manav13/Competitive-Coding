@@ -2,21 +2,21 @@
 using namespace std;
 
 int lengthOfLongestSubstring(string s) {
-    int size = s.size();
-    if(size == 0 || size == 1) return size;
-    
-    int max = 1, left = 0, right = 1;
-    // char, index
     unordered_map<char, int> hash;
-    hash[s[0]] = 0;
-    for(right = 1; right<size; right++) {
-        if(hash.find(s[right]) != hash.end() && left <= hash[s[right]]) {
-            left = hash[s[right]] + 1;
+    int start = 0, end = 0, maxLen = 0;
+    for(int i=0; i<s.size(); i++) {
+        if(hash.find(s[i]) == hash.end()) {
+            hash[s[i]] = i;
+            end = i;
         }
-        hash[s[right]] = right;
-        if(max < right-left+1) max = right-left+1;
+        else {
+            start = max(start, hash[s[i]]+1);
+            hash[s[i]] = i;
+            end = i;
+        }
+        maxLen = max(maxLen, end-start+1);
     }
-    return max;
+    return maxLen;
 }
 
 int main() {
