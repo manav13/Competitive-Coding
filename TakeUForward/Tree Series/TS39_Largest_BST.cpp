@@ -41,8 +41,8 @@ public:
 
         // If not a valid BST;
         int size = max(left[0], right[0]);
-        int minVal = INT_MAX;
-        int maxVal = INT_MIN;
+        int minVal = INT_MIN;
+        int maxVal = INT_MAX;
 
         return {size, minVal, maxVal};
     
