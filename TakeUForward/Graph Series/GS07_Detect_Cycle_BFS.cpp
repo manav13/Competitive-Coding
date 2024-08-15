@@ -4,21 +4,23 @@ using namespace std;
 bool detectCycleUsingBFS(int n, vector<int> adj[]) {
     vector<int> visited(n, 0);
     
+    // Storing {node, parent}
     queue<pair<int, int>> q;
     q.push({0, -1});
     visited[0] = 1;
 
     while(!q.empty()) {
-        pair<int, int> node = q.front();
+        int node = q.front().first;
+        int parent = q.front().second;
         q.pop();
 
-        for(auto v : adj[node.first]) {
+        for(auto v : adj[node]) {
             if(!visited[v]) {
-                q.push({v, node.first});
+                q.push({v, node});
                 visited[v] = 1;
             }
             else {
-                if(v != node.first) {
+                if(v != parent) {
                     return true;
                 }
             }
